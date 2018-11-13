@@ -7,8 +7,8 @@ import receiver
 
 # https://github.com/zeromq/pyzmq/blob/master/examples/serialization/serialsocket.py
 
-FPS = 1
-rollover = 200
+FPS = 5
+time_rollover = 20
 
 doc = curdoc()
 first_time=True
@@ -16,10 +16,11 @@ first_time=True
 source_dict ={'pv_0' :  ColumnDataSource({'time': [], 'data': []}),
               'pv_1': ColumnDataSource({'time': [], 'data': []}),
               }
+x = ColumnDataSource({'time': [], 'data': []})
 
 
-def create_figure(title='Power Q'):
-    global f
+
+def create_figure(title='Power P'):
     hover = HoverTool(tooltips=[
         ('Name', '$name'),
         ("Time", "@time"),
@@ -42,9 +43,10 @@ def create_figure(title='Power Q'):
 
 def update_mutli_line():
     global first_time
+    global time_rollover
     if len(receiver.buffer) > 0:
         data = receiver.buffer.popleft()
-        # print(data)
+        print(data)
         keys = list(data.keys())
         keys.remove('time')
         if first_time:
@@ -73,7 +75,7 @@ def update_mutli_line():
                 'time': [data['time']],
                 'data': [first],
             }
-            source.stream(new_data, rollover)
+            source.stream(new_data, rollover=20)
 
 doc.add_periodic_callback(update_mutli_line, 1000/FPS)
 

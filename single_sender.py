@@ -4,6 +4,7 @@ from time import sleep
 from itertools import cycle
 from numpy import random
 import zlib
+import json
 import pickle
 
 data_count = 14
@@ -30,8 +31,10 @@ if __name__ == "__main__":
         b = random.randn(100, )
         obj = dict(zip(keys, b))
         obj['time'] = n
-        pobj = pickle.dumps(obj, protocol)
-        zobj = zlib.compress(pobj)
+        # pobj = pickle.dumps(obj, protocol)
+        # zobj = zlib.compress(pobj)
+        jobj = json.dumps(obj).encode('utf8')
+        zobj = zlib.compress(jobj)
         print('zipped pickle is %i bytes' % len(zobj))
         skt.send(zobj)
         sleep(0.1)

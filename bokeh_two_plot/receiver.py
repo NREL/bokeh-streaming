@@ -2,8 +2,8 @@ from collections import deque
 import zmq
 import numpy as np
 import zlib
-import json
 import pickle
+import json
 
 buffer = deque(maxlen=100)
 
