@@ -2,8 +2,9 @@ from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, HoverTool,  SaveTool, ZoomOutTool, ZoomInTool, BoxZoomTool, ResetTool
 from bokeh.io import curdoc
 from bokeh.layouts import column
-from bokeh.palettes import Category20_20, Inferno256, Greys256
+from bokeh.palettes import Category20_20, Inferno256, Greys256, Set2_8
 
+from datetime import datetime
 import receiver
 
 # https://github.com/zeromq/pyzmq/blob/master/examples/serialization/serialsocket.py
@@ -13,20 +14,18 @@ FPS = 5
 doc = curdoc()
 first_time=True
 
-source_dict ={'pv_0' :  ColumnDataSource({'time': [], 'data': []}),
-              'pv_1': ColumnDataSource({'time': [], 'data': []}),
-              }
+source_dict ={}
 
 def create_figure(title='Power P'):
     hover = HoverTool(tooltips=[
-        # ('Name', '$name'),
+        ('Name', '@name'),
         ("Time", "@time"),
         (title, "@data")
     ])
     f = figure(plot_width=700,
                plot_height=500,
-               # x_axis_type='datetime',
-               x_axis_type='auto',
+               x_axis_type='datetime',
+               # x_axis_type='auto',
                tools=[hover, SaveTool(), ZoomOutTool(), ZoomInTool(), BoxZoomTool(), ResetTool()],
                title="Real-Time " + title + " Plot"
                )
@@ -47,14 +46,16 @@ def update_mutli_line():
                 data = top_data[key_name]
                 keys = list(data.keys())
                 print(keys)
-                keys.remove('time')
+                # keys.remove('time')
                 temp_figure = create_figure(key_name)
                 color_spectrum = Category20_20
+                if len(keys) < 9:
+                    color_spectrum = Set2_8
                 if len(keys) > 20:
                     color_spectrum = Greys256
                 for name, color in zip(keys, color_spectrum):
-                    source_dict[name] = ColumnDataSource({'time': [], 'data': []})
-                    print('name ' + name)
+                    source_dict[name] = ColumnDataSource({'time': [], 'data': [], 'name':[]})
+                    print('name ' + repr(name))
                     temp_figure.line(x='time', y='data', source=source_dict[name], color=color, legend=name, name=name)
                 temp_figure.legend.location = "top_left"
                 temp_figure.legend.click_policy = "hide"
@@ -67,15 +68,16 @@ def update_mutli_line():
             data = top_data[key_name]
 
             keys = list(data.keys())
-            keys.remove('time')
+            # keys.remove('time')
             for index, name in enumerate(keys):
-                first = data[name]
+                first = data[name]['data']
                 source = source_dict[name]
                 new_data = {
-                    'time': [data['time']],
+                    'time': [datetime.fromtimestamp(data[name]['time'])],
                     'data': [first],
+                    'name': [name]
                 }
-                source.stream(new_data, rollover=120)
+                source.stream(new_data, rollover=360)
 
 
 doc.add_periodic_callback(update_mutli_line, 1000/FPS)

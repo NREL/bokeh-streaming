@@ -26,13 +26,13 @@ if __name__ == "__main__":
         sig = math.sin(2 * math.pi * n)
         sin_temp = math.sin(math.pi * n)
         obj = {}
-        waves = dict(sin_wave=sin_temp,
-                     cos_wave=sig_cos[count],
-                     sin_sig_wave=sig_sin[count])
-        squares = dict(square_wave=square[count],
-                       pulse_width_modulated=pwm[count])
-        waves['time'] = count
-        squares['time'] = count
+        waves = dict(sin_wave=dict(data=sin_temp, time=count),
+                     cos_wave=dict(data=sig_cos[count], time=count),
+                     sin_sig_wave=dict(data=sig_sin[count], time=count))
+        squares = dict(square_wave=dict(data=square[count], time=count),
+                       pulse_width_modulated=dict(data=pwm[count], time=count))
+        # waves['time'] = count
+        # squares['time'] = count
         obj['Waves'] = waves
         obj['Squares'] = squares
         pobj = pickle.dumps(obj, protocol)
