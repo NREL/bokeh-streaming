@@ -18,7 +18,18 @@ if __name__ == "__main__":
 
     ctx = zmq.Context()
     skt = ctx.socket(zmq.PUB)
+    skt.setsockopt(zmq.IMMEDIATE,0)
     skt.bind('tcp://127.0.0.1:9000')
+    sleep(.3)
+
+    obj = dict(first=dict(first=1, time=1))
+    jobj = json.dumps(obj).encode('utf8')
+    zobj = zlib.compress(jobj)
+    print('zipped pickle is %i bytes' % len(zobj))
+    skt.send(zobj)
+    sleep(.1)
+
+    exit()
 
     for count, n in enumerate(t):
         flags = 0

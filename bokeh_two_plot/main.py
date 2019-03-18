@@ -14,7 +14,7 @@ FPS = 5
 doc = curdoc()
 first_time=True
 
-source_dict ={}
+source_dict = {}
 
 def create_figure(title='Power P'):
     hover = HoverTool(tooltips=[
@@ -36,9 +36,19 @@ def create_figure(title='Power P'):
 
 def update_mutli_line():
     global first_time
+    # global source_dict
+    # print(len(receiver.buffer))
     if len(receiver.buffer) > 0:
         top_data = receiver.buffer.popleft()
-        print(top_data)
+        print(top_data.keys())
+        print('first' in top_data.keys())
+        if 'first' in top_data.keys():  # reset graph
+            print(top_data['first'])
+            first_time = True
+            doc.clear()
+            # doc.remove_root()
+            return
+
         if first_time:
             figure_container = []
 
