@@ -4,9 +4,16 @@ Simple examples of bokeh streaming data.
 The plots intended to be generic and able to infere some of the plot data from the structure of the data sent.
 The reciever accepts zlib compressed pickled python dictionaries. 
 
+Download Anaconda from https://www.anaconda.com/distribution/
+
+Create a python environment from the command line.
+```bash
+conda create env -n plotting python=3.7
+```
 
 Install pyzmq and bokeh
 ```bash
+conda create env -n plotting python=3.6
 conda install pyzmq bokeh
 ```
 Or
@@ -29,6 +36,9 @@ python single_sender
 In terminal one:
 ```bash
 bokeh serve --show bokeh_two_plot/
+
+bokeh serve --show bokeh_two_plot/ --args --port 9001
+
 ```
 In terminal two:
 ```bash
