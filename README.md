@@ -8,7 +8,7 @@ Download Anaconda from https://www.anaconda.com/distribution/
 
 Create a python environment from the command line.
 ```bash
-conda create env -n plotting python=3.7
+conda create -n plotting python=3.7
 ```
 
 Install pyzmq and bokeh
@@ -54,6 +54,9 @@ Data for a single chart
     "time": integer
 } 
 ```
+
+2019-07-23 14:50:00
+2019-07-23 14:50:00
 
 Randomly generated PV example
 ```json

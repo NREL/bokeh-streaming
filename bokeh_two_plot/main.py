@@ -112,11 +112,11 @@ def update_mutli_line():
                 source_dict_top[key_name] = {}
                 for name, color in zip(keys, color_spectrum):
                     source_dict_top[key_name][name] = ColumnDataSource({'time': [], 'date': [], 'data': [], 'name':[]})
-                    print('name ' + repr(name))
+                    # print('name ' + repr(name))
                     line_style = 'solid'
                     if 'forecast' in name.lower():
                         line_style = 'dashed'
-                    temp_figure.line(x='time', y='data', source=source_dict_top[key_name][name], color=color, legend=name, name=name,
+                    temp_figure.line(x='time', y='data', source=source_dict_top[key_name][name], color=color, legend_label=name, name=name,
                                      line_width=3, line_dash=line_style)
                 temp_figure.legend.location = "top_left"
                 temp_figure.legend.click_policy = "hide"
