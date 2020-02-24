@@ -22,24 +22,22 @@ Or
 pip install pyzmq bokeh
 ```
 
-## Single plot
+
+## Run Bokeh Serve with multiple plots
 In terminal one:
 ```bash
-bokeh serve --show bokeh_single_plot/
+bokeh serve bokeh_two_plot/ --args --port 9001 
+## Adding --show will open a tab on the local machine
+
+Open a browser tab to http://localhost:5006/bokeh_two_plot
+
 ```
-In terminal two:
+
+Too forward to another address do this
 ```bash
-python single_sender
+python -m bokeh serve --show bokeh_two_plot/ --allow-websocket-origin=*:5006 --args --port 9001
 ```
 
-## Multiple plots
-In terminal one:
-```bash
-bokeh serve --show bokeh_two_plot/
-
-bokeh serve --show bokeh_two_plot/ --args --port 9001
-
-```
 In terminal two:
 ```bash
 python single_sender
