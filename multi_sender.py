@@ -39,7 +39,7 @@ from datetime import datetime
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-p","--port", type=int, help="port number, the default is 9001", default=9001, required=False)
+    parser.add_argument("-p","--port", type=int, help="port number, the default is 9001", default=9003, required=False)
     args = parser.parse_args()
     # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.signal.square.html
     t = np.linspace(0, 1, 500, endpoint=False)
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     import time
     seconds = int(time.time())
     print(datetime.fromtimestamp(1374510722).strftime("%Y-%m-%d %H:%M:%S"))
-    exit(0)
+    # exit(0)
 
     for count, n in enumerate(t):
         # count*=10

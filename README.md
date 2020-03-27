@@ -33,9 +33,14 @@ Open a browser tab to http://localhost:5006/bokeh_two_plot
 
 ```
 
-Too forward to another address do this
+Too forward to another address do this for each app
 ```bash
+# DER-Dispatch
 python -m bokeh serve --show bokeh_two_plot/ --allow-websocket-origin=*:5006 --args --port 9001
+# Solar-Forecasting
+python -m bokeh serve --show bokeh_two_plot/ --allow-websocket-origin=*:5006 --args --port 9002
+# Grid-Forecasting
+python -m bokeh serve --show bokeh_two_plot/ --allow-websocket-origin=*:5006 --args --port 9003
 ```
 
 In terminal two:
